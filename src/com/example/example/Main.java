@@ -1,56 +1,56 @@
 package com.example.example;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        String[][] tictactoeA = new String[3][3];
-        String[][] tictactoeB = new String[3][3];
-        for (int l = 0;l<3;l++){
-            tictactoeA[l] = s.nextLine().split("");
+        int n = s.nextInt();
+        int k = s.nextInt();
+        ArrayList<Integer> r = new ArrayList<>();
+        ArrayList<Integer> t = new ArrayList<>();
+
+        for (int i = 0;i<n;i++){
+            r.add(s.nextInt());
         }
-        for (int l = 0;l<3;l++){
-            tictactoeB[l] = s.nextLine().split("");
+        for (int i = 0;i<n;i++){
+            t.add(s.nextInt());
         }
-        int countOfChangesX = 0;
-        int countOfChanges0 = 0;
-        int countOfX = 0;
-        int countOf0 = 0;
-        int countOfXDo = 0;
-        int countOf0Do = 0;
-        for (int i = 0;i<tictactoeA.length;i++){
-            for (int j = 0;j<tictactoeA[i].length;j++) {
-                String a = tictactoeA[i][j];
-                String b = tictactoeB[i][j];
-                if (a.equals("X")) countOfXDo++;
-                else if (a.equals("0")) countOf0Do++;
-                if (b.equals("X")) countOfX++;
-                else if (b.equals("0")) countOf0++;
-                if (!a.equals(b)) {
-                    switch (b){
-                        case "X":
-                            countOfChangesX++;
-                            break;
-                        case "0":
-                            countOfChanges0++;
-                            break;
+        boolean changes;
+        do{
+            changes=false;
+            for (int i=0;i<r.size();i++){
+                for (int j=0;j<r.size();j++){
+                    int riv = r.get(i);
+                    int rjv = r.get(j);
+                    int tiv = t.get(i);
+                    int tjv = t.get(j);
+                    if (i<j){
+                        if (riv<rjv){
+                            r.set(i,rjv);
+                            r.set(j,riv);
+                            t.set(i,tjv);
+                            t.set(j,tiv);
+                        }
+                        if (tiv>tjv){
+                            r.set(i,rjv);
+                            r.set(j,riv);
+                            t.set(i,tjv);
+                            t.set(j,tiv);
+                        }
                     }
                 }
             }
+
+        }while(changes);
+        int sumR = 0;
+        int sumT = 0;
+        for (int i = 0;i<k;i++){
+            sumR+=r.get(i);
+            sumT+=t.get(i);
+            System.out.println(r.get(i)+" "+t.get(i));
         }
-        if (countOfChanges0==0 && countOfChangesX==0){
-            System.out.println("YES");
-        }else if(countOfXDo>countOf0Do){
-            if (countOfChangesX>0) System.out.println("NO");
-            else if (countOfChanges0>0) System.out.println("YES");
-        } else if (countOfXDo==countOf0Do){
-            if (countOfChanges0>0) System.out.println("NO");
-            else if (countOfChangesX>0) System.out.println("YES");
-        } else if (countOfChanges0>1 || countOfChangesX>1){
-            System.out.println("NO");
-        }else {
-            System.out.println("YES");
-        }
+        System.out.println((sumR*1.0)/sumT);
     }
 }
