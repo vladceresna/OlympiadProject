@@ -1,4 +1,4 @@
-package com.example.example;
+package com.example.example.uoi;
 
 import java.util.ArrayList;
 import java.util.Scanner;
